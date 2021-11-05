@@ -114,20 +114,32 @@ class JemaatAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateJemaatAPIRequest $request)
+    public function update(Request $request,$id)
     {
-        $input = $request->all();
+        $jemaat=Jemaat::find($id);
+    $jemaat->update($request->all());
 
+    $ibadah=$request->get('ibadah_id');
+    $jemaat->ibadah()->associate($ibadah);
+    $jemaat->save();
+    return response([
+        'data' => $jemaat,
+        'message' => 'product updated'
+    ],200);
+        
         /** @var Jemaat $jemaat */
-        $jemaat = $this->jemaatRepository->find($id);
+        // $jemaat = $this->jemaatRepository->find($id);
 
-        if (empty($jemaat)) {
-            return $this->sendError('Jemaat not found');
-        }
+        // if (empty($jemaat)) {
+        //     return $this->sendError('Jemaat not found');
+        // }
+        // //
+        // // $jemaat->update($request->all());
+        // $jemaat = $this->jemaatRepository->update($request->all(), $id);
 
-        $jemaat = $this->jemaatRepository->update($input, $id);
+        // return 
+        // $this->sendResponse($jemaat->toArray(), 'Jemaat updated successfully');
 
-        return $this->sendResponse($jemaat->toArray(), 'Jemaat updated successfully');
     }
 
     /**
