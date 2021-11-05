@@ -139,14 +139,46 @@ class JemaatController extends AppBaseController
     {
         $jemaat = $this->jemaatRepository->find($id);
 
+        //////////////
+
         if (empty($jemaat)) {
             Flash::error('Jemaat not found');
 
             return redirect(route('jemaats.index'));
         }
 
-        $jemaat = $this->jemaatRepository->update($request->all(), $id);
+        ////////////
 
+        $input = $request->all();
+
+        if ($request->hasFile('kartuVaksin')) {
+
+            //Validate the uploaded file
+            $Validation = $request->validate([
+
+                'kartuVaksin' => 'required|mimes:png,jpg,jpeg|max:2048'
+            ]);
+
+            // cache the file
+            $file = $Validation['kartuVaksin'];
+            $originalName = $file->getClientOriginalName();
+
+
+            // generate a new filename. getClientOriginalExtension() for the file extension
+            $filename = 'images_' . time() . '.' . $file->getClientOriginalExtension();
+
+            // save to storage/app/infrastructure as the new $filename
+            $InfrasFileName = $file->storeAs('public', $filename);
+
+            $path = $InfrasFileName;
+        }
+
+        $input['kartuVaksin'] = $path;
+
+        $jemaat = $this->jemaatRepository->update($input, $id);
+
+        
+        //////////
         Flash::success('Jemaat updated successfully.');
 
         return redirect(route('jemaats.index'));

@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Http\Controllers\API\JemaatAPIController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +27,4 @@ Route::resource('ibadahs', IbadahAPIController::class);
 
 Route::resource('jemaats', JemaatAPIController::class);
 
-Route::get('search/{request}', [JemaatAPIController::class, 'search']);
+Route::get('search/{request}', [App\Http\Controllers\API\JemaatAPIController::class, 'search']);

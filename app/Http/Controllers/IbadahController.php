@@ -146,7 +146,33 @@ class IbadahController extends AppBaseController
             return redirect(route('ibadahs.index'));
         }
 
-        $ibadah = $this->ibadahRepository->update($request->all(), $id);
+        $input = $request->all();
+
+        if ($request->hasFile('imageIbadah')) {
+
+            //Validate the uploaded file
+            $Validation = $request->validate([
+
+                'imageIbadah' => 'required|mimes:png,jpg,jpeg|max:2048'
+            ]);
+
+            // cache the file
+            $file = $Validation['imageIbadah'];
+            $originalName = $file->getClientOriginalName();
+
+
+            // generate a new filename. getClientOriginalExtension() for the file extension
+            $filename = 'images_' . time() . '.' . $file->getClientOriginalExtension();
+
+            // save to storage/app/infrastructure as the new $filename
+            $InfrasFileName = $file->storeAs('public', $filename);
+
+            $path = $InfrasFileName;
+        }
+
+        $input['imageIbadah'] = $path;
+
+        $jemaat = $this->ibadahRepository->update($input, $id);
 
         Flash::success('Ibadah updated successfully.');
 
