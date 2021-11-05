@@ -117,15 +117,15 @@ class JemaatAPIController extends AppBaseController
     public function update(Request $request,$id)
     {
         $jemaat=Jemaat::find($id);
-    $jemaat->update($request->all());
+        $jemaat->update($request->all());
 
-    $ibadah=$request->get('ibadah_id');
-    $jemaat->ibadah()->associate($ibadah);
-    $jemaat->save();
-    return response([
-        'data' => $jemaat,
-        'message' => 'product updated'
-    ],200);
+        $ibadah=$request->get('ibadah_id');
+        $jemaat->ibadah()->associate($ibadah);
+        $jemaat->save();
+        return response([
+            'data' => $jemaat,
+            'message' => 'product updated'
+        ],200);
         
         /** @var Jemaat $jemaat */
         // $jemaat = $this->jemaatRepository->find($id);
