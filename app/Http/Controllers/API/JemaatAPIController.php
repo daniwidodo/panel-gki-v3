@@ -114,7 +114,7 @@ class JemaatAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function update(Request $request,$id)
+    public function update($id, Request $request)
     {
         $jemaat=Jemaat::find($id);
         $jemaat->update($request->all());
@@ -124,21 +124,13 @@ class JemaatAPIController extends AppBaseController
         $jemaat->save();
         return response([
             'data' => $jemaat,
-            'message' => 'product updated'
+            'message' => 'Jemaat updated'
         ],200);
-        
+
         /** @var Jemaat $jemaat */
         // $jemaat = $this->jemaatRepository->find($id);
 
-        // if (empty($jemaat)) {
-        //     return $this->sendError('Jemaat not found');
-        // }
-        // //
-        // // $jemaat->update($request->all());
-        // $jemaat = $this->jemaatRepository->update($request->all(), $id);
 
-        // return 
-        // $this->sendResponse($jemaat->toArray(), 'Jemaat updated successfully');
 
     }
 
@@ -169,13 +161,13 @@ class JemaatAPIController extends AppBaseController
     public function search ($request)
     {
         $data = Jemaat::where('nik', '=', $request)->get();
-        if ($data->isEmpty()) 
-        { 
+        if ($data->isEmpty())
+        {
             return response()->json([ 'message' => 'Resource not found!' ], 404);
         } else {
             return response()->json($data, 200);
-           
+
         }
-        
+
     }
 }

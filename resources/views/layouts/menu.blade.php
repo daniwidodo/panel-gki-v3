@@ -14,3 +14,13 @@
 </li>
 
 
+
+
+<li class="nav-item">
+    <a href="{{ route('agapes.index') }}"
+       class="nav-link {{ Request::is('agapes*') ? 'active' : '' }}">
+        <p>Agapes</p>
+    </a>
+</li>
+
+

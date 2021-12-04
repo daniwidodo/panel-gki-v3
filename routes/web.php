@@ -45,3 +45,10 @@ Route::resource('ibadahs', App\Http\Controllers\IbadahController::class);
 
 
 Route::resource('jemaats', App\Http\Controllers\JemaatController::class);
+
+
+
+
+
+
+Route::resource('agapes', App\Http\Controllers\AgapeController::class);

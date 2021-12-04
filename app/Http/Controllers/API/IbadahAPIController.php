@@ -38,10 +38,25 @@ class IbadahAPIController extends AppBaseController
         //     $request->except(['skip', 'limit']),
         //     $request->get('skip'),
         //     $request->get('limit')
-            
         // );
 
-        $ibadahs = Ibadah::with(['jemaat'])->get();
+        //  $ibadahs = Ibadah::with(['jemaat'])->latest('created_at')->first();
+        // return $this->sendResponse($ibadahs->toArray(), 'Ibadahs retrieved successfully');
+
+        $ibadahs = Ibadah::with(['jemaat'])->latest('updated_at')->first();
+
+        return $this->sendResponse($ibadahs->toArray(), 'Ibadahs retrieved successfully');
+    }
+
+    public function indexAll(Request $request)
+    {
+        $ibadahs = $this->ibadahRepository->all(
+            $request->except(['skip', 'limit']),
+            $request->get('skip'),
+            $request->get('limit')
+        );
+
+        // $ibadahs = Ibadah::with(['jemaat'])->latest('updated_at')->first();
 
         return $this->sendResponse($ibadahs->toArray(), 'Ibadahs retrieved successfully');
     }
@@ -92,7 +107,7 @@ class IbadahAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function update($id, UpdateIbadahAPIRequest $request)
+    public function update($id, Request $request)
     {
         $input = $request->all();
 

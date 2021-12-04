@@ -23,8 +23,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::resource('ibadahs', IbadahAPIController::class);
-
-
+Route::resource('agapes', AgapeAPIController::class);
 Route::resource('jemaats', JemaatAPIController::class);
 
 Route::get('search/{request}', [App\Http\Controllers\API\JemaatAPIController::class, 'search']);
+Route::get('semua-ibadah', [App\Http\Controllers\API\IbadahAPIController::class, 'indexAll']);
+
+
